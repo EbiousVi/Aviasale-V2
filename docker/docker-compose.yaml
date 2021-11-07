@@ -1,0 +1,27 @@
+version: "3.5"
+services:
+  database:
+    image: aviasale-database:latest
+    build:
+      context: ../
+      dockerfile: ./docker/database/Dockerfile
+    ports:
+      - "37032:5432"
+  backend:
+    image: aviasale-backend:latest
+    build:
+      context: ../
+      dockerfile: ./docker/backend/Dockerfile
+    depends_on:
+      - database
+      - frontend
+    ports:
+      - "37064:6060"
+    restart: on-failure
+  frontend:
+    image: aviasale-frontend:latest
+    build:
+      context: ../
+      dockerfile: ./docker/frontend/Dockerfile
+    ports:
+      - "37128:8080"

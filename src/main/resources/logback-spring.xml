@@ -1,0 +1,44 @@
+<configuration debug="false">
+    <!-- use Spring default values -->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <timestamp key="bySecond" datePattern="yyyy-MM-dd'T'HH-mm"/>
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>logs/log-${bySecond}.log</file>
+        <encoder>
+            <Pattern>%yellow(%d{HH:mm:ss}) [%thread] %-5level %logger{36} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="com.ebious.aviasale" level="INFO"/>
+    <logger name="com.ebious.aviasale" level="WARN"/>
+    <logger name="com.ebious.aviasale" level="ERROR"/>
+
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+    <root level="warn">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+    <root level="error">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+    </root>
+    <springProfile name="dev">
+        <logger name="com.ebious.aviasale" level="info"/>
+    </springProfile>
+    <springProfile name="test">
+        <logger name="com.ebious.aviasale" level="trace"/>
+    </springProfile>
+</configuration>

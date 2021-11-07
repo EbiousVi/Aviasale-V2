@@ -1,0 +1,18 @@
+version: "3.5"
+services:
+  database:
+    image: ebious/aviasale-database:latest
+    ports:
+      - "37032:5432"
+  backend:
+    image: ebious/aviasale-backend:latest
+    depends_on:
+      - database
+      - frontend
+    restart: on-failure
+    ports:
+      - "37064:6060"
+  frontend:
+    image: ebious/aviasale-frontend:latest
+    ports:
+      - "37128:8080"
